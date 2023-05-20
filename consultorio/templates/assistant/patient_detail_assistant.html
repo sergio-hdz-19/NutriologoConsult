@@ -1,0 +1,39 @@
+{% extends "users/base_users.html" %}
+
+{% load  static %}
+
+{% block panel-content %}
+
+<div class="grid-x grid-margin-x align-center">
+  <h3 class="cell" style="margin-bottom: 1em; text-align: center;">Paciente</h3>  
+  <table class="cell">
+      <thead>
+          <th>Nombres</th>
+          <th>Apellidos</th>
+          <th>Sexo</th>
+          <th>Realiza actividad aeróbica</th>
+         
+
+      </thead>
+      <tbody>
+        
+          <tr>
+            <td>{{ patient.name }}</td>
+            <td>{{ patient.last_name }}</td>
+            <td>{{ patient.gender }}</td>
+            <td>
+              {% if patient.actividad_aerobica %}
+                <span>Si</span>
+              {% else %}
+                <span>No</span>
+              {% endif %}
+            </td>
+          </tr>
+     
+      </tbody>
+  </table>
+
+  
+</div>
+
+{% endblock panel-content %}

@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<div class="grid-container">
+
+  <div class="grid-x">
+      <h1 class="cell" >Status</h1>
+
+      <form class="cell grid-x grid-margin-x" method="GET">{% csrf_token %}
+        <div class="cell large-7">
+          {% comment %} <input type="text" id="kword" name="kword"  placeholder="Buscar Status"> {% endcomment %}
+          <input type="number" id="kword" name="kword" value="{{ request.GET.kword }}" placeholder="Buscar Status">
+
+        </div>
+         <div class="cell large-2">
+          <button type="submit" class="success button">Buscar</button>
+
+         </div>
+
+      </form>
+
+      <div class="cell">
+          <table>
+              <thead>
+                <tr>
+                  <th width="200">ID</th>
+                  <th>NOMBRE</th>
+                  <th width="150">APELLIDOS</th>
+                  <th width="300">PESO</th>
+                  <th width="150">OBSERVACIONES</th>
+                  <th width="150">FECHA</th>
+                  <th width="150">NUTRIOLOGO</th>
+
+                </tr>
+              </thead>
+              <tbody>
+                {% for c in consultas  %}
+                <tr>
+                  <td>{{c.id}}</td>
+                  <td>{{c.patient.name}}</td>
+                  <td>{{c.patient.last_name}}</td>
+                  <td>{{c.peso}}</td>
+                  <td>{{c.observations}}</td>
+                  <td>{{c.created_at}}</td>
+                  <td>{{c.created_by.get_full_name}}</td>
+                </tr>
+                {% endfor %}
+              </tbody> 
+          </table>
+      </div>
+
+      {% comment %} <div class="cell">
+        {% if is_paginated  %}
+        <nav aria-label="Pagination">
+            <ul class="pagination">   
+                {% if page_obj.has_previous %}
+                <li class="pagination-previous">
+                  <a href="?page={{page_obj.previous_page_number}}"> Atras</a>
+                </li>
+                {% endif %}
+                
+                {% for pagina  in paginator.page_range %}
+                
+                {%  if pagina == page_obj.number  %} 
+                  <li class="current"><span class="show-for-sr">You're on page</span>{{pagina}}</li>
+                {% else%}
+                <li><a href="?page={{pagina}}">{{pagina}}</a></li>
+                {% endif %}
+
+                
+                
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                <li class="pagination-next">
+                  <a href="?page={{page_obj.next_page_number}}"> Siguiente</a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+          {% endif %}
+            
+         
+      </div> {% endcomment %}
+
+  </div>
+
+
+
+</div>
+
+
+
+
+
+
+{% endblock content %}

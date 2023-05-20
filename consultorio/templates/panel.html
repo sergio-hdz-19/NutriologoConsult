@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% load  static %}
+
+{% block content %}
+
+<div class="off-canvas-wrapper">
+  <div class="off-canvas-wrapper-inner" data-off-canvas-wrapper>
+
+    <div class="off-canvas position-left reveal-for-large" id="my-info" data-off-canvas data-position="left" style="background-color: #424242;">
+      <div class="row column">
+        <h3 style="text-align: center; padding: 0.3em; color: #ffae00;">Consultorio</h3>
+        <ul class="vertical menu">
+            <li>
+              {% comment %} <a href="#"><span class="label warning">Almacen</span></a> {% endcomment %}
+              <ul class="nested vertical menu">
+                <li class="{% if request.resolver_match.url_name == 'producto-lista' %}activeli{% endif %}">
+                  {% comment %} <a href="{% url 'producto_app:producto-lista' %}" style="color: white;">Productos</a> {% endcomment %}
+                </li>
+                <li class="{% if request.resolver_match.url_name == 'producto-filtros' %}activeli{% endif %}">
+                  {% comment %} <a href="{% url 'producto_app:producto-filtros' %}" style="color: white;">Reportes</a> {% endcomment %}
+                </li>
+              </ul>
+            </li>
+        </ul>
+        <ul class="vertical menu">
+            <li>
+              {% comment %} <a href="#"><span class="label warning">Ventas</span></a> {% endcomment %}
+              <ul class="nested vertical menu">
+                <li class="{% if request.resolver_match.url_name == 'venta-index' %}activeli{% endif %}">
+                  {% comment %} <a href="{% url 'venta_app:venta-index' %}" style="color: white;">Vender</a> {% endcomment %}
+                </li>
+                <li class="{% if request.resolver_match.url_name == 'caja-index' %}activeli{% endif %}">
+                  {% comment %} <a href="{% url 'caja_app:caja-index' %}" style="color: white;">Cerrar Caja</a> {% endcomment %}
+                </li>
+              </ul>
+            </li>
+        </ul>
+        <ul class="vertical menu">
+            <li>
+              {% comment %} <a href="#"><span class="label warning">Administracion</span></a> {% endcomment %}
+              <ul class="nested vertical menu">
+                <li class="{% if request.resolver_match.url_name == 'index-admin' %}activeli{% endif %}">
+                  {% comment %} <a href="{% url 'home_app:index-admin' %}" style="color: white;">Administracion</a> {% endcomment %}
+                </li>
+
+                
+                {% if request.user.ocupation == "0" %}
+                  <li class="{% if request.resolver_match.url_name == 'user-lista' %}activeli{% endif %}">
+                    <a href="{% url 'users_app:user-lista' %}" style="color: white;">Administradores</a>
+                  </li>
+                  <li class="{% if request.resolver_match.url_name == 'user-lista' %}activeli{% endif %}">
+                    <a href="{% url 'users_app:user-lista-patient' %}" style="color: white;">Pacientes</a>
+                  </li>
+                  <li class="{% if request.resolver_match.url_name == 'user-lista' %}activeli{% endif %}">
+                    <a href="{% url 'users_app:user-lista-assistant' %}" style="color: white;">Asistentes</a>
+                  </li>
+                {% endif %}
+                  
+                {% if request.user.ocupation == "1" %}
+                  <li class="{% if request.resolver_match.url_name == 'user-lista' %}activeli{% endif %}">
+                    <a href="{% url 'users_app:user-lista-patient-assistant' %}" style="color: white;">Pacientes</a>
+                  </li>
+                {% endif %}
+                
+                <li class="{% if request.resolver_match.url_name == 'admin-reporte' %}activeli{% endif %}">
+                  {% comment %} <a href="{% url 'home_app:admin-reporte' %}" style="color: white;">Reportes</a> {% endcomment %}
+                </li>
+              </ul>
+            </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="off-canvas-content" data-off-canvas-content>
+      <!-- declaramos un nuevo bloque para contenidod e panel -->
+      <div class="grid-x">
+        <div class="cell top-bar" style="background-color: #424242;">
+          <div class="top-bar-left">
+            <h4 style="color: white;">Sesion de: {{ user.get_full_name }}</h4>
+          </div>
+          <div class="top-bar-right">
+            <a href="{% url 'users_app:user-logout' %}">
+              <span class="label warning">Salir</span>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="grid-container" style="padding: 1em;">
+        {% block panel-content %}
+        {% endblock panel-content %}
+      </div>
+  </div>
+</div>
+{% endblock content %}

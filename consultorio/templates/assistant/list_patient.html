@@ -1,0 +1,26 @@
+{% extends "users/base_users.html" %}
+
+{% load  static %}
+
+{% block panel-content %}
+
+<div class="grid-x grid-margin-x align-center">
+  <h3 class="cell" style="margin-bottom: 1em; text-align: center;">Pacientes</h3>  
+  <table class="cell">
+      <thead>
+          <th>Nombres</th>
+      </thead>
+      <tbody>
+        {% for paciente in pacientes %}
+          <tr>
+            
+            <td><a href="{% url 'users_app:user-update-paciente-assistant'  paciente.pk %}">{{ paciente.get_full_name }}</a></td>
+        {% endfor %}
+      </tbody>
+  </table>
+
+ 
+</div>
+
+
+{% endblock panel-content %}

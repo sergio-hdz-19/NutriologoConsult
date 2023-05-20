@@ -1,0 +1,45 @@
+{% extends "users/base_users.html" %}
+
+{% load  static %}
+
+{% block panel-content %}
+
+<div class="grid-x grid-margin-x align-center">
+  <h3 class="cell" style="margin-bottom: 1em; text-align: center;">Asistentes</h3>  
+  <table class="cell">
+      <thead>
+          <th>Username</th>
+          <th>Nombres</th>
+          <th>Ultima Conexion</th>
+          <th>Ocupacion</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+      </thead>
+      <tbody>
+        {% for asistente in asistentes %}
+          <tr>
+            <td>{{ asistente.username }}</td>
+            <td>{{ asistente.get_full_name }}</td>
+            <td>{{ asistente.last_login }}</td>
+            <td>{{ asistente.get_ocupation_display }}</td>
+            <td>
+              {% if asistente.is_active %}
+                <span class="label success">Activo</span>
+              {% else %}
+                <span class="label alert">De Baja</span>
+              {% endif %}
+            </td>
+            <td>
+            <a href="{% url 'users_app:user-update' asistente.pk %}" class="button warning"><i class="fi-pencil"></i></a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+  </table>
+
+  <div class="cell">
+    <a href="{% url 'users_app:user-register' %}" class="cell button">Agregar Nuevo Usuario</a>
+  </div>
+</div>
+
+{% endblock panel-content %}

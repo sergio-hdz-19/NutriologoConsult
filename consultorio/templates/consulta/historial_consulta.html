@@ -1,0 +1,36 @@
+{% extends "users/base_users.html" %}
+
+{% load  static %}
+
+{% block panel-content %}
+
+<div class="grid-x grid-margin-x align-center">
+    {% for p in paciente %}
+        <h3 class="cell" style="margin-bottom: 1em; text-align: center;">Historial Consultas : {{p.get_full_name}}</h3>  
+    {% endfor %}
+    <table class="cell">
+        <thead>
+            <th>Nombres</th>
+            <th>Peso</th>
+            <th>Observaciones</th>
+            <th>Fecha</th>
+        </thead>
+        <tbody>
+            {% for consulta in consultas %}
+            <tr>
+                
+                <td>{{consulta.patient.get_full_name}}</td>
+                <td>{{consulta.peso}}</td>
+                <td>{{consulta.observations}}</td>
+                <td>{{consulta.created_at}}</td>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% for p in paciente %}
+        <h2 class="cell" style="margin-bottom: 1em; text-align: center;">Altura Paciente : {{p.altura}}</h3>  
+    {% endfor %}
+    <h2>IMC: {{ imc|floatformat:3 }}</h2>
+</div>   
+</div>
+
+{% endblock panel-content %}

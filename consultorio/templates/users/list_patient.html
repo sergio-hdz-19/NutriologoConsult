@@ -1,0 +1,63 @@
+{% extends "users/base_users.html" %}
+
+{% load  static %}
+
+{% block panel-content %}
+
+<div class="grid-x grid-margin-x align-center">
+  <h3 class="cell" style="margin-bottom: 1em; text-align: center;">Pacientes</h3>  
+  <table class="cell">
+      <thead>
+          <th>Nombres</th>
+      </thead>
+      <tbody>
+        {% for paciente in pacientes %}
+          <tr>
+            {% comment %} <td>{{ paciente.get_full_name }}</td> {% endcomment %}
+            <td><a href="{% url 'users_app:patient_detail'  paciente.pk %}">{{ paciente.get_full_name }}</a></td>
+        {% endfor %}
+      </tbody>
+  </table>
+
+  <div class="cell">
+    <a href="{% url 'users_app:user-register-patient' %}" class="cell button">Agregar Nuevo Paciente</a>
+  </div>
+</div>
+
+
+
+<div class="cell">
+  {% if is_paginated  %}
+  <nav aria-label="Pagination">
+      <ul class="pagination">   
+          {% if page_obj.has_previous %}
+          <li class="pagination-previous">
+            <a href="?page={{page_obj.previous_page_number}}"> Atras</a>
+          </li>
+          {% endif %}
+          
+          {% for pagina  in paginator.page_range %}
+          
+          {%  if pagina == page_obj.number  %} 
+            <li class="current"><span class="show-for-sr">You're on page</span>{{pagina}}</li>
+          {% else%}
+          <li><a href="?page={{pagina}}">{{pagina}}</a></li>
+          {% endif %}
+
+          
+          
+          {% endfor %}
+
+          {% if page_obj.has_next %}
+          <li class="pagination-next">
+            <a href="?page={{page_obj.next_page_number}}"> Siguiente</a>
+          </li>
+          {% endif %}
+      </ul>
+  </nav>
+    {% endif %}
+      
+   
+</div>
+
+{% endblock panel-content %}

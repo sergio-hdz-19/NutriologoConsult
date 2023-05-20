@@ -1,0 +1,68 @@
+{% extends "users/base_users.html" %}
+
+{% load  static %}
+
+{% block panel-content %}
+
+<div class="grid-x grid-margin-x align-center">
+  <h3 class="cell" style="margin-bottom: 1em; text-align: center;">Paciente</h3>  
+  <table class="cell">
+      <thead>
+          <th>ID</th>
+          <th>Nombres</th>
+          <th>Ultima Conexion</th>
+          <th>Kg</th>
+          <th>Altura</th>
+          <th>Realiza actividad aeróbica</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+          <th>Crear Consulta</th>
+          <th>Historial Consulta</th>
+
+      </thead>
+      <tbody>
+        
+          <tr>
+            <td>{{ patient.id }}</td>
+            <td>{{ patient.get_full_name }}</td>
+            <td>{{ patient.last_login }}</td>
+            <td>{{ patient.peso }}</td>
+            <td>{{ patient.altura }}</td>
+            <td>
+              {% if patient.actividad_aerobica %}
+                <span>Si</span>
+              {% else %}
+                <span>No</span>
+              {% endif %}
+            </td>
+            <td>
+              {% if patient.is_active %}
+                <span class="label success">Activo</span>
+              {% else %}
+                <span class="label alert">De Baja</span>
+              {% endif %}
+            </td>
+            <td>
+            <a href="{% url 'users_app:user-update-paciente' patient.pk %}" class="button warning"><i class="fi-pencil"></i></a>
+            </td>
+            <td>
+            <a href="{% url 'consulta_app:add-consulta-paciente' patient.pk %}" class="button primary"><i class="fi-plus"></i></a>
+            </td>
+
+            {% if consulta_exists %}
+                <td>
+                  <a href="{% url 'consulta_app:historial-consulta-paciente' patient.pk %}" class="button primary"><i class="fi-eye"></i></a>
+                </td>
+            {% else %}
+            
+            {% endif %}
+           
+          </tr>
+     
+      </tbody>
+  </table>
+
+  
+</div>
+
+{% endblock panel-content %}
